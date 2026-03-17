@@ -17,6 +17,14 @@ def create_app():
     def index():
         return {"message": "Job Tracker API is running"}
     
+    @app.errorhandler(404)
+    def not_found(e):
+        return {"error": "Resource not found"}, 404
+
+    @app.errorhandler(500)
+    def server_error(e):
+        return {"error": "An unexpected error occurred"}, 500
+    
     app.register_blueprint(jobs_bp)
     
     return app

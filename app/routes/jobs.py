@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from app.models.job import Job
 from app.extensions import db
 from app.schemas.job import JobSchema
+from marshmallow import ValidationError
 
 
 jobs_bp = Blueprint("jobs", __name__)
@@ -25,12 +26,16 @@ def get_job(id):
 @jobs_bp.route("/jobs", methods=["POST"])
 def post_jobs():
     new_job = request.get_json()
-    deserialized_job = job_schema.load(new_job)
-    job_object = Job(**deserialized_job)
 
-    db.session.add(job_object)
-    db.session.commit()
-    return {"message": "Job has been posted"}, 201
+    try:
+        deserialized_job = job_schema.load(new_job)
+        job_object = Job(**deserialized_job)
+
+        db.session.add(job_object)
+        db.session.commit()
+        return {"message": "Job has been posted"}, 201
+    except ValidationError as e:
+        return {"error": e.messages}, 400
 
 @jobs_bp.route("/jobs/<id>", methods=["PUT"])
 def update_jobs(id):
@@ -39,14 +44,17 @@ def update_jobs(id):
     if not current_job:
         return {"error": "Job not found"}, 404
     
-    updated_job = job_schema.load(request.get_json(), partial=True)
     
-    for key, value in updated_job.items():
-        setattr(current_job, key, value)
+    try:
+        updated_job = job_schema.load(request.get_json(), partial=True)
+        for key, value in updated_job.items():
+            setattr(current_job, key, value)
 
-    db.session.commit()
-    
-    return job_schema.dump(current_job), 200
+        db.session.commit()
+        
+        return job_schema.dump(current_job), 200
+    except ValidationError as e:
+        return {"error": e.messages}, 400
 
 @jobs_bp.route("/jobs/<id>", methods=["DELETE"])
 def delete_job(id):
