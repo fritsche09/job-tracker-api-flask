@@ -1,12 +1,12 @@
 from flask import Flask
 from app.extensions import db
-from app.models.job import Job # noqa: F401 - imported to register model with SQLAlchemy
+from app.models.job import Job 
 from app.routes.jobs import jobs_bp
+from config import Config
 
 def create_app():
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///jobtracker.db"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config.from_object(Config)
 
     db.init_app(app)
 
