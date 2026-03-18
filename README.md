@@ -10,7 +10,7 @@ A REST API for tracking job applications built with Flask, SQLAlchemy, and Marsh
 - Flask 
 - SQLAlchemy
 - Marshmallow 
-- SQLite
+- PostgreSQL
 
 ## How To Run Locally
 
@@ -33,7 +33,14 @@ A REST API for tracking job applications built with Flask, SQLAlchemy, and Marsh
 
 4. Create a `.env` file based on `.env.example`
 
-5. Run the app
+5. Set up a PostgreSQL database and update your `.env` file
+   - Create a new database in PostgreSQL 
+   - Update your `.env` with your database credentials:
+```
+   SQLALCHEMY_DATABASE_URI=postgresql://user:password@localhost/your-database-name
+```
+
+6. Run the app
 ```bash
    python run.py
 ```
