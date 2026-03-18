@@ -2,7 +2,7 @@
 
 ## Description
 
-A REST API for tracking job applications built with Flask, SQLAlchemy, and Marshmallow. Supports full CRUD operations — create, read, update, and delete job applications via JSON endpoints. 
+A REST API for tracking job applications built with Flask, SQLAlchemy, and Marshmallow. Supports full CRUD operations create, read, update, and delete job applications via JSON endpoints. 
 
 ## Tech Stack
 
