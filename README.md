@@ -16,8 +16,8 @@ A REST API for tracking job applications built with Flask, SQLAlchemy, and Marsh
 
 1. Clone the repository
 ```bash
-   git clone https://github.com/yourname/job-tracker-api.git
-   cd job-tracker-api
+   git clone https://github.com/fritsche09/job-tracker-api-flask.git
+   cd job-tracker-api-flask
 ```
 
 2. Create and activate a virtual environment
